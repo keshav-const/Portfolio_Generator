@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+
 
 const PortfolioForm = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +25,15 @@ const PortfolioForm = () => {
   const [previewUrl, setPreviewUrl] = useState("");
   const [zipPath, setZipPath] = useState("");
   const [loading, setLoading] = useState(false);
+  const [iframeLoading, setIframeLoading] = useState(false);
+
+  useEffect(() => {
+  const saved = localStorage.getItem("portfolioFormData");
+  if (saved) {
+    setFormData(JSON.parse(saved));
+  }
+}, []);
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,18 +68,32 @@ const PortfolioForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post("http://localhost:5000/api/generate", formData);
+        toast.loading("Generating your portfolio...");
+        const res = await axios.post("http://localhost:5000/api/generate", formData);
+        toast.dismiss(); // remove loading
+        toast.success("Portfolio generated successfully!");
+
+      //const res = await axios.post("http://localhost:5000/api/generate", formData);
       setPreviewUrl(`http://localhost:5000${res.data.previewUrl}`);
       setZipPath(`http://localhost:5000${res.data.zipPath}`);
     } catch (err) {
-      alert("Error generating portfolio");
+      toast.dismiss();
+      toast.error("Failed to generate portfolio");
+
       console.error(err);
     }
     setLoading(false);
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
+
+    <motion.div
+  initial={{ opacity: 0, y: 30 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.6 }}
+  className="bg-white p-6 rounded-lg shadow-md"
+>
+  { <div className="max-w-3xl mx-auto p-6 bg-white rounded-xl shadow-md space-y-6">
       <h2 className="text-2xl font-bold">Generate Your Portfolio</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -104,13 +129,32 @@ const PortfolioForm = () => {
         </div>
 
         <div>
-          <label className="font-semibold">Template</label>
-          <select name="template" onChange={handleChange} value={formData.template} className="input">
-            <option value="default">Default</option>
-            <option value="modern">Modern</option>
-            <option value="darkmode">Dark Mode</option>
-          </select>
-        </div>
+  <p className="font-semibold mb-2">Choose a Template</p>
+  <div className="grid grid-cols-3 gap-4">
+    {["default", "modern", "darkmode"].map((template) => (
+      <div
+        key={template}
+        onClick={() =>
+          setFormData((prev) => ({ ...prev, template }))
+        }
+        className={`cursor-pointer border-4 rounded-xl p-1 hover:border-blue-400 ${
+          formData.template === template ? "border-blue-500" : "border-transparent"
+        }`}
+      >
+       <motion.img
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
+        transition={{ type: "spring", stiffness: 300 }}
+        src={`/templates/${template}.png`}
+        alt={template}
+       />
+
+        <p className="text-center mt-1 capitalize">{template}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
 
         <button type="submit" className="btn" disabled={loading}>
           {loading ? "Generating..." : "Generate Portfolio"}
@@ -118,18 +162,37 @@ const PortfolioForm = () => {
       </form>
 
       {previewUrl && (
-        <div className="mt-6">
-          <h3 className="text-xl font-semibold mb-2">Live Preview</h3>
-          <iframe src={previewUrl} className="w-full h-[600px] border" />
-        </div>
-      )}
+        <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.5 }}
+    className="mt-6"
+  >
+    <div className="mt-6">
+    <h3 className="text-xl font-semibold mb-2">Live Preview</h3>
+    {iframeLoading && <p className="text-gray-500 mb-2">Loading preview...</p>}
+    <iframe
+      src={previewUrl}
+      className="w-full h-[600px] border"
+      onLoad={() => setIframeLoading(false)}
+      onLoadStart={() => setIframeLoading(true)}
+    />
+  </div>
+  </motion.div>
+  
+)}
+
 
       {zipPath && (
         <a href={zipPath} className="btn mt-4 inline-block" download>
           📦 Download .ZIP
         </a>
       )}
-    </div>
+    </div>}
+</motion.div>
+
+
+   
   );
 };
 
