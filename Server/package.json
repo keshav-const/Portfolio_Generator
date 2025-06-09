@@ -7,15 +7,22 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^7.1.1",
     "archiver": "^5.3.2",
     "axios": "^1.9.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "daisyui": "^5.0.43",
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
+    "framer-motion": "^12.16.0",
     "fs": "^0.0.1-security",
     "fs-extra": "^11.2.0",
     "path": "^0.12.7",
+    "react": "^19.1.0",
+    "tailwindcss": "^4.1.8",
     "uuid": "^9.0.1"
   }
 }
