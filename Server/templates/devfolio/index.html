@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevFolio</title>
+  <link rel="stylesheet" href="terminal-style.css">
+</head>
+<body style="background-color: black; color: #00FF00; font-family: monospace; padding: 2rem;">
+  <div style="max-width: 800px; margin: 0 auto;">
+    <!-- Header -->
+    <div style="background: #111; padding: 1rem; border: 1px solid #00FF00; border-radius: 5px; margin-bottom: 2rem;">
+      <p><strong>user@portfolio:</strong>~$ whoami</p>
+      <p style="margin-left: 1.5rem;">{{name}} — {{title}}</p>
+    </div>
+
+    <!-- Projects -->
+    <div style="background: #111; padding: 1rem; border: 1px solid #00FF00; border-radius: 5px; margin-bottom: 2rem;">
+      <p><strong>user@portfolio:</strong>~$ cat projects.txt</p>
+      <ul style="margin-left: 1.5rem;">
+        {{projects}}
+      </ul>
+    </div>
+
+    <!-- Socials -->
+    <div style="background: #111; padding: 1rem; border: 1px solid #00FF00; border-radius: 5px; margin-bottom: 2rem;">
+      <p><strong>user@portfolio:</strong>~$ open socials.txt</p>
+      <div style="margin-left: 1.5rem;">
+        {{socialLinks}}
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div style="background: #111; padding: 1rem; border: 1px solid #00FF00; border-radius: 5px;">
+      <p><strong>user@portfolio:</strong>~$ echo contact</p>
+      <p style="margin-left: 1.5rem;">{{contact}}</p>
+    </div>
+  </div>
+</body>
+</html>
