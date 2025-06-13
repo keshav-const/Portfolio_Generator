@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Darkmode Terminal</title>
+  <style>
+    body {
+      background-color: #0d1117;
+      color: #c9d1d9;
+      font-family: 'Courier New', Courier, monospace;
+      padding: 2rem;
+    }
+    .terminal-block {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 2rem;
+    }
+    .command {
+      color: #58a6ff;
+    }
+    a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal-block">
+    <div><span class="command">user@portfolio:</span>~$ whoami</div>
+    <div style="margin-left: 1rem;">{{name}} — {{title}}</div>
+  </div>
+
+  <div class="terminal-block">
+    <div><span class="command">user@portfolio:</span>~$ cat projects.txt</div>
+    <ul style="margin-left: 1rem;">
+      {{projects}}
+    </ul>
+  </div>
+
+  <div class="terminal-block">
+    <div><span class="command">user@portfolio:</span>~$ open socials.txt</div>
+    <div style="margin-left: 1rem;">
+      {{socialLinks}}
+    </div>
+  </div>
+
+  <div class="terminal-block">
+    <div><span class="command">user@portfolio:</span>~$ echo contact</div>
+    <div style="margin-left: 1rem;">{{contact}}</div>
+  </div>
+</body>
+</html>

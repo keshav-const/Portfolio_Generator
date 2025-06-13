@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Creative Edge</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mui/material@5.0.0-alpha.37/dist/material.min.css" />
+  <style>
+    body { font-family: 'Roboto', sans-serif; padding: 2rem; background-color: #fafafa; }
+    .container { max-width: 900px; margin: auto; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; background-color: white; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .project-title { font-weight: 600; font-size: 1.2rem; }
+    .chip { border: 1px solid #1976d2; color: #1976d2; padding: 0.4rem 0.8rem; margin: 0.25rem; border-radius: 9999px; display: inline-block; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 style="text-align: center;">{{name}}</h1>
+    <p style="text-align: center; color: #666;">{{title}}</p>
+
+    <!-- Projects -->
+    <section style="margin-top: 2rem;">
+      <h2>Projects</h2>
+      <div id="projects">
+        {{projects}}
+      </div>
+    </section>
+
+    <!-- Socials -->
+    <section style="margin-top: 2rem;">
+      <h2>Connect</h2>
+      <div>
+        {{socialLinks}}
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <footer style="margin-top: 2rem; text-align: center; color: #555;">
+      Contact me at: <a href="mailto:{{contact.email}}" style="color: #1976d2;">{{contact.email}}</a>
+    </footer>
+  </div>
+</body>
+</html>
