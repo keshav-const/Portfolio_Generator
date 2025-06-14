@@ -40,40 +40,64 @@
 //   }
 // });
 
-// module.exports = router;
+// // module.exports = router;
+// import express from "express";
+// import fetchGitHubData from "../utils/fetchGitHub.js";
+// import generateSite from "../utils/generateSite.js";
+// import zipPortfolio from "../utils/zipGenerator.js";
+
+// const router = express.Router();
+
+// router.post("/", async (req, res) => {
+//   try {
+//     const {
+//       name,
+//       bio,
+//       githubUsername,
+//       projectLinks,
+//       socialLinks,
+//       contactInfo,
+//       template,
+//     } = req.body;
+
+//     const projects = await fetchGitHubData(githubUsername, projectLinks);
+//     const folderPath = await generateSite({
+//       name,
+//       bio,
+//       projects,
+//       socialLinks,
+//       contactInfo,
+//       template,
+//     });
+//     const zipPath = await zipPortfolio(folderPath);
+//     res.download(zipPath, "portfolio.zip");
+//   } catch (error) {
+//     console.error("Portfolio generation failed:", error);
+//     res.status(500).json({ message: "Internal Server Error" });
+//   }
+// });
+
+// export default router;
 import express from "express";
-import fetchGitHubData from "../utils/fetchGitHub.js";
+import fs from "fs";
+import path from "path";
 import generateSite from "../utils/generateSite.js";
-import zipPortfolio from "../utils/zipGenerator.js";
+import zipGenerator from "../utils/zipGenerator.js";
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  try {
-    const {
-      name,
-      bio,
-      githubUsername,
-      projectLinks,
-      socialLinks,
-      contactInfo,
-      template,
-    } = req.body;
+  const userData = req.body;
+  const template = userData.template || "default";
+  const folderPath = `output/${Date.now()}_${template}`;
 
-    const projects = await fetchGitHubData(githubUsername, projectLinks);
-    const folderPath = await generateSite({
-      name,
-      bio,
-      projects,
-      socialLinks,
-      contactInfo,
-      template,
-    });
-    const zipPath = await zipPortfolio(folderPath);
-    res.download(zipPath, "portfolio.zip");
-  } catch (error) {
-    console.error("Portfolio generation failed:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+  try {
+    await generateSite(userData, template, folderPath);
+    const zipPath = await zipGenerator(folderPath);
+    res.download(zipPath);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to generate portfolio" });
   }
 });
 

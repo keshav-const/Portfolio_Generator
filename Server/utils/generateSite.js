@@ -100,68 +100,111 @@
 
 //   return outputDir; // important for zipping and live preview
 // }
-const fs = require("fs-extra");
-const path = require("path");
-const React = require("react");
-const ReactDOMServer = require("react-dom/server");
-const babel = require("@babel/core");
+// const fs = require("fs-extra");
+// const path = require("path");
+// const React = require("react");
+// const ReactDOMServer = require("react-dom/server");
+// const babel = require("@babel/core");
 
-async function generateSite(userData, selectedTemplate) {
-  const templateDir = path.join(__dirname, "..", "templates", selectedTemplate);
-  const componentPath = path.join(templateDir, "index.jsx");
+// async function generateSite(userData, selectedTemplate) {
+//   const templateDir = path.join(__dirname, "..", "templates", selectedTemplate);
+//   const componentPath = path.join(templateDir, "index.jsx");
 
-  if (!fs.existsSync(componentPath)) {
-    throw new Error(`Template component not found: ${componentPath}`);
+//   if (!fs.existsSync(componentPath)) {
+//     throw new Error(`Template component not found: ${componentPath}`);
+//   }
+
+//   // Read the JSX file
+//   const jsxCode = await fs.readFile(componentPath, "utf-8");
+
+//   // Transpile JSX to JS using Babel
+//   const transpiled = babel.transformSync(jsxCode, {
+//     presets: ["@babel/preset-react"],
+//     filename: "index.jsx",
+//   });
+
+//   // Create a fake module to evaluate the transpiled code
+//   const module = { exports: {} };
+//   const requireFunc = (mod) => {
+//     if (mod === "react") return React;
+//     return null;
+//   };
+
+//   const wrappedCode = `
+//     (function(require, module, exports) {
+//       ${transpiled.code}
+//     })(requireFunc, module, module.exports);
+//   `;
+//   eval(wrappedCode); // Populate module.exports
+
+//   const TemplateComponent = module.exports.default;
+
+//   // Render HTML string using ReactDOMServer
+//   const htmlString = ReactDOMServer.renderToStaticMarkup(
+//     React.createElement(TemplateComponent, userData)
+//   );
+
+//   const finalHTML = `<!DOCTYPE html>
+// <html lang="en">
+// <head>
+//   <meta charset="UTF-8">
+//   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//   <title>${userData.name}'s Portfolio</title>
+// </head>
+// <body>
+//   ${htmlString}
+// </body>
+// </html>`;
+
+//   // Create output directory and write index.html
+//   const outputDir = path.join(__dirname, "..", "output", userData._id || "site");
+//   await fs.ensureDir(outputDir);
+//   await fs.writeFile(path.join(outputDir, "index.html"), finalHTML, "utf-8");
+
+//   return outputDir;
+// }
+
+// module.exports = generateSite;
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import path from 'path';
+import fs from 'fs-extra';
+import babel from '@babel/core';
+
+const templatesPath = path.join(process.cwd(), 'templates');
+
+const transpileJSX = async (jsxPath) => {
+  const code = await fs.readFile(jsxPath, 'utf-8');
+  const result = await babel.transformAsync(code, {
+    presets: ['@babel/preset-react'],
+    filename: 'index.jsx',
+  });
+  return result.code;
+};
+
+const generateSite = async (data, templateName) => {
+  const templateDir = path.join(templatesPath, templateName);
+  const jsxFile = path.join(templateDir, 'index.jsx');
+
+  if (!fs.existsSync(jsxFile)) {
+    throw new Error('Template JSX file not found');
   }
 
-  // Read the JSX file
-  const jsxCode = await fs.readFile(componentPath, "utf-8");
+  const compiledCode = await transpileJSX(jsxFile);
 
-  // Transpile JSX to JS using Babel
-  const transpiled = babel.transformSync(jsxCode, {
-    presets: ["@babel/preset-react"],
-    filename: "index.jsx",
-  });
+  // Dynamically evaluate JSX as a React component
+  const ComponentModule = new module.constructor();
+  ComponentModule.paths = module.paths;
+  ComponentModule._compile(compiledCode, 'index.jsx');
+  const TemplateComponent = ComponentModule.exports.default;
 
-  // Create a fake module to evaluate the transpiled code
-  const module = { exports: {} };
-  const requireFunc = (mod) => {
-    if (mod === "react") return React;
-    return null;
-  };
-
-  const wrappedCode = `
-    (function(require, module, exports) {
-      ${transpiled.code}
-    })(requireFunc, module, module.exports);
-  `;
-  eval(wrappedCode); // Populate module.exports
-
-  const TemplateComponent = module.exports.default;
-
-  // Render HTML string using ReactDOMServer
-  const htmlString = ReactDOMServer.renderToStaticMarkup(
-    React.createElement(TemplateComponent, userData)
+  const html = ReactDOMServer.renderToStaticMarkup(
+    React.createElement(TemplateComponent, data)
   );
 
-  const finalHTML = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${userData.name}'s Portfolio</title>
-</head>
-<body>
-  ${htmlString}
-</body>
-</html>`;
+  const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>${data.name}'s Portfolio</title></head><body>${html}</body></html>`;
 
-  // Create output directory and write index.html
-  const outputDir = path.join(__dirname, "..", "output", userData._id || "site");
-  await fs.ensureDir(outputDir);
-  await fs.writeFile(path.join(outputDir, "index.html"), finalHTML, "utf-8");
+  return fullHtml;
+};
 
-  return outputDir;
-}
-
-module.exports = generateSite;
+export default generateSite;

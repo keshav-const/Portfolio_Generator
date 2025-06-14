@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js"
   },
-   "presets": ["@babel/preset-react"],
+  "presets": [
+    "@babel/preset-react"
+  ],
   "dependencies": {
     "@babel/core": "^7.27.4",
     "@babel/preset-react": "^7.27.1",
