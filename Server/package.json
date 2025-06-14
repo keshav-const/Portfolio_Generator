@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node server.js"
   },
+   "presets": ["@babel/preset-react"],
   "dependencies": {
+    "@babel/core": "^7.27.4",
+    "@babel/preset-react": "^7.27.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^7.1.1",
@@ -19,9 +22,10 @@
     "express": "^4.21.2",
     "framer-motion": "^12.16.0",
     "fs": "^0.0.1-security",
-    "fs-extra": "^11.2.0",
+    "fs-extra": "^11.3.0",
     "path": "^0.12.7",
     "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8",
     "uuid": "^9.0.1"
   }
