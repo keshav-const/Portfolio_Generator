@@ -13,7 +13,14 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 
-const CreativeEdgeTemplate = ({ name, title, github, projects, socials, contact }) => {
+const CreativeEdgeTemplate = ({
+  name = "John Doe",
+  title = "Full Stack Developer",
+  github = "https://github.com/",
+  projects = [],
+  socials = [],
+  contact = { email: "example@example.com" },
+}) => {
   return (
     <Container maxWidth="md" sx={{ py: 6 }}>
       <motion.div

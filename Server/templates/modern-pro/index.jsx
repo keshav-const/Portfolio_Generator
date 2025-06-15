@@ -2,7 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import "daisyui/dist/full.css";
 
-const ModernProTemplate = ({ name, title, github, projects, socials, contact }) => {
+const ModernProTemplate = ({
+  name = "",
+  title = "",
+  github = "",
+  projects = [],
+  socials = [],
+  contact = {},
+}) => {
   return (
     <div className="min-h-screen bg-base-200 py-10 px-6">
       <motion.div
@@ -28,12 +35,13 @@ const ModernProTemplate = ({ name, title, github, projects, socials, contact }) 
                 className="card bg-base-100 shadow-md"
               >
                 <div className="card-body">
-                  <h3 className="card-title text-primary">{proj.name}</h3>
-                  <p>{proj.description}</p>
+                  <h3 className="card-title text-primary">{proj?.name}</h3>
+                  <p>{proj?.description}</p>
                   <div className="card-actions justify-end">
                     <a
-                      href={proj.link}
+                      href={proj?.link}
                       target="_blank"
+                      rel="noopener noreferrer"
                       className="btn btn-sm btn-primary"
                     >
                       View Project
@@ -52,11 +60,12 @@ const ModernProTemplate = ({ name, title, github, projects, socials, contact }) 
             {socials.map((soc, i) => (
               <a
                 key={i}
-                href={soc.link}
+                href={soc?.link}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="btn btn-outline btn-sm"
               >
-                {soc.platform}
+                {soc?.platform}
               </a>
             ))}
           </div>
@@ -64,7 +73,7 @@ const ModernProTemplate = ({ name, title, github, projects, socials, contact }) 
 
         {/* Contact */}
         <footer className="text-center text-sm text-base-content mt-12">
-          Contact: {contact.email}
+          Contact: {contact?.email}
         </footer>
       </motion.div>
     </div>

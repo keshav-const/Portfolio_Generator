@@ -2,7 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./terminal-style.css"; // Optional extra styling
 
-const DevFolioTemplate = ({ name, title, github, projects, socials, contact }) => {
+const DevFolioTemplate = ({
+  name = "",
+  title = "",
+  github = "",
+  projects = [],
+  socials = [],
+  contact = {},
+}) => {
   return (
     <div className="min-h-screen bg-black text-green-400 font-mono p-6">
       <motion.div
@@ -17,7 +24,9 @@ const DevFolioTemplate = ({ name, title, github, projects, socials, contact }) =
             <span className="text-green-600">user@portfolio:</span>~${" "}
             <span className="text-white">whoami</span>
           </p>
-          <p className="pl-6">{name} — {title}</p>
+          <p className="pl-6">
+            {name} — {title}
+          </p>
         </div>
 
         {/* Projects */}
@@ -30,13 +39,14 @@ const DevFolioTemplate = ({ name, title, github, projects, socials, contact }) =
             {projects.map((proj, i) => (
               <li key={i}>
                 <a
-                  href={proj.link}
+                  href={proj?.link}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-400 hover:underline"
                 >
-                  {proj.name}
+                  {proj?.name}
                 </a>{" "}
-                — <span className="text-gray-300">{proj.description}</span>
+                — <span className="text-gray-300">{proj?.description}</span>
               </li>
             ))}
           </ul>
@@ -52,11 +62,12 @@ const DevFolioTemplate = ({ name, title, github, projects, socials, contact }) =
             {socials.map((soc, i) => (
               <a
                 key={i}
-                href={soc.link}
+                href={soc?.link}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="underline text-blue-400 hover:text-blue-300"
               >
-                {soc.platform}
+                {soc?.platform}
               </a>
             ))}
           </div>
@@ -68,7 +79,7 @@ const DevFolioTemplate = ({ name, title, github, projects, socials, contact }) =
             <span className="text-green-600">user@portfolio:</span>~${" "}
             <span className="text-white">echo contact</span>
           </p>
-          <p className="pl-6 mt-2">{contact.email}</p>
+          <p className="pl-6 mt-2">{contact?.email}</p>
         </div>
       </motion.div>
     </div>

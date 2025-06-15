@@ -2,7 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import "./style.css"; // Optional: Add additional styling if needed
 
-const MinimalistTemplate = ({ name, title, github, projects, socials, contact }) => {
+const MinimalistTemplate = ({
+  name = "",
+  title = "",
+  github = "",
+  projects = [],
+  socials = [],
+  contact = {},
+}) => {
   return (
     <div className="min-h-screen bg-white text-gray-900 p-6 font-sans">
       <motion.div
@@ -25,10 +32,15 @@ const MinimalistTemplate = ({ name, title, github, projects, socials, contact })
                 whileHover={{ scale: 1.02 }}
                 className="p-4 border rounded-md shadow-sm"
               >
-                <a href={proj.link} target="_blank" className="text-lg font-bold text-blue-600">
-                  {proj.name}
+                <a
+                  href={proj?.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-lg font-bold text-blue-600"
+                >
+                  {proj?.name}
                 </a>
-                <p className="text-sm text-gray-700">{proj.description}</p>
+                <p className="text-sm text-gray-700">{proj?.description}</p>
               </motion.div>
             ))}
           </div>
@@ -40,18 +52,19 @@ const MinimalistTemplate = ({ name, title, github, projects, socials, contact })
             {socials.map((soc, i) => (
               <a
                 key={i}
-                href={soc.link}
+                href={soc?.link}
                 target="_blank"
+                rel="noopener noreferrer"
                 className="text-blue-500 hover:underline"
               >
-                {soc.platform}
+                {soc?.platform}
               </a>
             ))}
           </div>
         </section>
 
         <footer className="text-center text-sm text-gray-500 mt-12">
-          Contact: {contact.email}
+          Contact: {contact?.email}
         </footer>
       </motion.div>
     </div>
