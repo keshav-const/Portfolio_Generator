@@ -3,7 +3,7 @@ import generateSite from '../utils/generateSite.js';
 import zipGenerator from '../utils/zipGenerator.js';
 import fs from 'fs';
 import path from 'path';
-
+import fetchGitHubProjects from '../utils/fetchGitHubprojects.js';
 const router = express.Router();
 
 const TEMP_PREVIEW_DIR = path.join(process.cwd(), 'temp_preview');
@@ -26,6 +26,8 @@ router.post('/generate', async (req, res) => {
   try {
     const { data, template } = req.body;
     const zipPath = await zipGenerator(data, template);
+    const { name, title, github, projectLinks, socials, contact } = req.body;
+    const projects = await fetchGitHubProjects(github, projectLinks);
     res.download(zipPath, `${data.name || 'portfolio'}.zip`, () => {
       fs.unlinkSync(zipPath); // Clean up
     });

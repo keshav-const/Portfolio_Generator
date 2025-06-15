@@ -1,12 +1,13 @@
+// components/LivePreview.jsx
 import React, { Suspense } from "react";
 
 const templates = {
   minimalist: React.lazy(() => import("../../../Server/templates/minimalist")),
   "modern-pro": React.lazy(() => import("../../../Server/templates/modern-pro")),
   devfolio: React.lazy(() => import("../../../Server/templates/devfolio")),
-  "creative-edge": React.lazy(() => import("../../../Server/templates/Creative-edge")),
-  darkmode:React.lazy(()=> import("../../../Server/templates/darkmode")),
-  default:React.lazy(()=>import("../../../Server/templates/default")),
+  "creative-edge": React.lazy(() => import("../../../Server/templates/creative-edge")),
+  darkmode: React.lazy(() => import("../../../Server/templates/darkmode")),
+  default: React.lazy(() => import("../../../Server/templates/default")),
 };
 
 const LivePreview = ({ selectedTemplate, formData }) => {

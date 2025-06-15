@@ -1,44 +1,66 @@
 import React from "react";
 
-const DarkmodeTemplate = ({ name, title, github, projects, socials, contact }) => {
+const DarkModeTemplate = ({
+  name = "Jane Doe",
+  title = "Software Developer",
+  github = "https://github.com/",
+  projects = [],
+  socials = [],
+  contact = { email: "jane@example.com" },
+}) => {
   return (
-    <div style={{ backgroundColor: "#121212", color: "#fff", minHeight: "100vh", padding: "2rem", fontFamily: "Arial, sans-serif" }}>
-      <header style={{ textAlign: "center", marginBottom: "2rem" }}>
-        <h1>{name}</h1>
-        <p style={{ color: "#bbb" }}>{title}</p>
-      </header>
+    <div className="bg-gray-900 text-white min-h-screen p-8 font-sans">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold">{name}</h1>
+        <p className="text-lg text-gray-400">{title}</p>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2 style={{ color: "#fff" }}>Projects</h2>
-        <ul style={{ listStyle: "none", padding: 0 }}>
+      <div className="mt-10">
+        <h2 className="text-2xl border-b border-gray-700 pb-2 mb-4">Projects</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {projects.map((proj, i) => (
-            <li key={i} style={{ backgroundColor: "#1e1e1e", margin: "1rem 0", padding: "1rem", borderRadius: "8px" }}>
-              <h3 style={{ margin: 0 }}>{proj.name}</h3>
-              <p>{proj.description}</p>
-              <a href={proj.link} target="_blank" rel="noreferrer" style={{ color: "#90caf9" }}>
-                View
+            <div
+              key={i}
+              className="bg-gray-800 rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow"
+            >
+              <h3 className="text-xl font-semibold">{proj.name}</h3>
+              <p className="text-sm text-gray-400">{proj.description}</p>
+              <a
+                href={proj.link}
+                target="_blank"
+                className="text-blue-400 hover:underline text-sm mt-2 inline-block"
+              >
+                View Project
               </a>
-            </li>
+            </div>
           ))}
-        </ul>
-      </section>
+        </div>
+      </div>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2>Socials</h2>
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <div className="mt-10">
+        <h2 className="text-2xl border-b border-gray-700 pb-2 mb-4">Socials</h2>
+        <div className="flex flex-wrap gap-3">
           {socials.map((soc, i) => (
-            <a key={i} href={soc.link} target="_blank" rel="noreferrer" style={{ color: "#90caf9" }}>
+            <a
+              key={i}
+              href={soc.link}
+              target="_blank"
+              className="bg-gray-700 text-white px-4 py-1 rounded-full text-sm hover:bg-gray-600"
+            >
               {soc.platform}
             </a>
           ))}
         </div>
-      </section>
+      </div>
 
-      <footer style={{ textAlign: "center", marginTop: "2rem", color: "#bbb" }}>
-        Contact: <a href={`mailto:${contact.email}`} style={{ color: "#90caf9" }}>{contact.email}</a>
-      </footer>
+      <div className="mt-10 text-center text-sm text-gray-500">
+        Contact me at:{" "}
+        <a href={`mailto:${contact.email}`} className="text-blue-400 hover:underline">
+          {contact.email}
+        </a>
+      </div>
     </div>
   );
 };
 
-export default DarkmodeTemplate;
+export default DarkModeTemplate;
