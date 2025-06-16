@@ -165,6 +165,51 @@
 // }
 
 // module.exports = generateSite;
+// import React from 'react';
+// import ReactDOMServer from 'react-dom/server';
+// import path from 'path';
+// import fs from 'fs-extra';
+// import babel from '@babel/core';
+
+// const templatesPath = path.join(process.cwd(), 'templates');
+
+// const transpileJSX = async (jsxPath) => {
+//   const code = await fs.readFile(jsxPath, 'utf-8');
+//   const result = await babel.transformAsync(code, {
+//     presets: ['@babel/preset-react'],
+//     filename: 'index.jsx',
+//   });
+//   return result.code;
+// };
+
+// const generateSite = async (data, templateName) => {
+//   const templateDir = path.join(templatesPath, templateName);
+//   const jsxFile = path.join(templateDir, 'index.jsx');
+
+//   if (!fs.existsSync(jsxFile)) {
+//     throw new Error('Template JSX file not found');
+//   }
+
+//   const compiledCode = await transpileJSX(jsxFile);
+
+//   // Dynamically evaluate JSX as a React component
+//   const ComponentModule = new module.constructor();
+//   ComponentModule.paths = module.paths;
+//   ComponentModule._compile(compiledCode, 'index.jsx');
+//   const TemplateComponent = ComponentModule.exports.default;
+
+//   const html = ReactDOMServer.renderToStaticMarkup(
+//     React.createElement(TemplateComponent, data)
+//   );
+
+//   const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>${data.name}'s Portfolio</title></head><body>${html}</body></html>`;
+
+//   return fullHtml;
+// };
+
+// export default generateSite;
+
+
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import path from 'path';
@@ -172,6 +217,7 @@ import fs from 'fs-extra';
 import babel from '@babel/core';
 
 const templatesPath = path.join(process.cwd(), 'templates');
+const stylesPath = path.join(process.cwd(), 'styles', 'tailwind.output.css'); // Path to the built Tailwind CSS
 
 const transpileJSX = async (jsxPath) => {
   const code = await fs.readFile(jsxPath, 'utf-8');
@@ -198,11 +244,32 @@ const generateSite = async (data, templateName) => {
   ComponentModule._compile(compiledCode, 'index.jsx');
   const TemplateComponent = ComponentModule.exports.default;
 
+  // Load Tailwind CSS
+  let css = '';
+  try {
+    css = await fs.readFile(stylesPath, 'utf-8');
+  } catch (err) {
+    console.error("❌ Tailwind CSS not found or not built. Run `npm run build:css` in backend.");
+  }
+
   const html = ReactDOMServer.renderToStaticMarkup(
     React.createElement(TemplateComponent, data)
   );
 
-  const fullHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>${data.name}'s Portfolio</title></head><body>${html}</body></html>`;
+  const fullHtml = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>${data.name || "Portfolio"}</title>
+        <style>${css}</style>
+      </head>
+      <body>
+        ${html}
+      </body>
+    </html>
+  `;
 
   return fullHtml;
 };
