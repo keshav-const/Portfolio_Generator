@@ -174,6 +174,23 @@ const DefaultTemplate = ({
   contact = {},
 }) => {
   return (
+
+    <>
+    <style>
+        {`
+          @font-face {
+            font-family: 'Inter';
+            src: url('./fonts/Inter-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+          }
+
+          body {
+            font-family: 'Inter', sans-serif;
+          }
+        `}
+      </style>
+
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans px-6 py-10">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -253,6 +270,7 @@ const DefaultTemplate = ({
         </motion.footer>
       </motion.div>
     </div>
+    </>
   );
 };
 

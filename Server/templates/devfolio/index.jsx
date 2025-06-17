@@ -11,6 +11,23 @@ const DevFolioTemplate = ({
   contact = {},
 }) => {
   return (
+
+    <>
+    <style>
+        {`
+          @font-face {
+            font-family: 'Inter';
+            src: url('./fonts/Inter-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+          }
+
+          body {
+            font-family: 'Inter', sans-serif;
+          }
+        `}
+      </style>
+
     <div className="min-h-screen bg-black text-green-400 font-mono p-6">
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -83,6 +100,7 @@ const DevFolioTemplate = ({
         </div>
       </motion.div>
     </div>
+    </>
   );
 };
 
