@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import "daisyui/dist/full.css";
-
+import "./style.css"
 const ModernProTemplate = ({
   name = "",
   title = "",
@@ -11,21 +11,7 @@ const ModernProTemplate = ({
   contact = {},
 }) => {
   return (
-    <>
-    <style>
-        {`
-          @font-face {
-            font-family: 'Inter';
-            src: url('./fonts/Inter-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
+   
     <div className="min-h-screen bg-base-200 py-10 px-6">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
@@ -92,7 +78,7 @@ const ModernProTemplate = ({
         </footer>
       </motion.div>
     </div>
-    </>
+  
   );
 };
 

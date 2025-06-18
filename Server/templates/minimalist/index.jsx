@@ -12,21 +12,6 @@ const MinimalistTemplate = ({
 }) => {
   return (
 
-    <>
-    <style>
-        {`
-          @font-face {
-            font-family: 'Inter';
-            src: url('./fonts/Inter-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
     <div className="min-h-screen bg-white text-gray-900 p-6 font-sans">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -84,7 +69,7 @@ const MinimalistTemplate = ({
         </footer>
       </motion.div>
     </div>
-    </>
+    
   );
 };
 

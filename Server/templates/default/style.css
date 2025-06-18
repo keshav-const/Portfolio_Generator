@@ -1,5 +1,13 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://raw.githubusercontent.com/rsms/inter/master/docs/font-files/Inter-Regular.woff2') format('woff2');
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 2rem;
   background: #f9f9f9;
 }

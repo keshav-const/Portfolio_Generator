@@ -12,7 +12,7 @@ import {
   Link,
 } from "@mui/material";
 import { motion } from "framer-motion";
-
+import "./style.css"
 const CreativeEdgeTemplate = ({
   name = "John Doe",
   title = "Full Stack Developer",
@@ -22,22 +22,7 @@ const CreativeEdgeTemplate = ({
   contact = { email: "example@example.com" },
 }) => {
   return (
-    <>
-      {/* Custom Font Injection */}
-      <style>
-        {`
-          @font-face {
-            font-family: 'Inter';
-            src: url('./fonts/Inter-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
+    
 
       <Container maxWidth="md" sx={{ py: 6 }}>
         <motion.div
@@ -136,7 +121,7 @@ const CreativeEdgeTemplate = ({
           </Typography>
         </motion.div>
       </Container>
-    </>
+    
   );
 };
 

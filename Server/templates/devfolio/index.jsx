@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "./terminal-style.css"; // Optional extra styling
+ import './style.css'// Optional extra styling
 
 const DevFolioTemplate = ({
   name = "",
@@ -11,22 +11,6 @@ const DevFolioTemplate = ({
   contact = {},
 }) => {
   return (
-
-    <>
-    <style>
-        {`
-          @font-face {
-            font-family: 'Inter';
-            src: url('./fonts/Inter-Regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-          }
-
-          body {
-            font-family: 'Inter', sans-serif;
-          }
-        `}
-      </style>
 
     <div className="min-h-screen bg-black text-green-400 font-mono p-6">
       <motion.div
@@ -100,7 +84,7 @@ const DevFolioTemplate = ({
         </div>
       </motion.div>
     </div>
-    </>
+    
   );
 };
 
