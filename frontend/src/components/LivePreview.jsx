@@ -14,16 +14,29 @@ const templates = {
 const LivePreview = ({ selectedTemplate, formData }) => {
   const SelectedComponent = templates[selectedTemplate];
 
-  // Sanitize and provide fallbacks for props
   const safeProps = {
     name: formData.name || "Your Name",
-    title: formData.title || "Your Title",
-    github: formData.github || "https://github.com",
-    projects: Array.isArray(formData.projects) ? formData.projects : [],
-    socials: Array.isArray(formData.socials) ? formData.socials : [],
+    title: formData.bio || "Developer", // You don't have 'title' field, so use 'bio' here
+    github: formData.githubUsername
+      ? `https://github.com/${formData.githubUsername}`
+      : "https://github.com",
+
+    projects: Array.isArray(formData.projectLinks)
+      ? formData.projectLinks.map((link, i) => ({
+          name: `Project ${i + 1}`,
+          description: "A brief description goes here.",
+          link: link,
+        }))
+      : [],
+
+    socials: Object.entries(formData.socialLinks || {}).map(([platform, link]) => ({
+      platform,
+      link,
+    })),
+
     contact: {
-      email: formData.contact?.email || "your@email.com",
-      phone: formData.contact?.phone || "",
+      email: formData.contactInfo?.email || "your@email.com",
+      phone: formData.contactInfo?.phone || "",
     },
   };
 
@@ -38,5 +51,6 @@ const LivePreview = ({ selectedTemplate, formData }) => {
     </div>
   );
 };
+
 
 export default LivePreview;
