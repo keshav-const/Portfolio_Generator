@@ -161,22 +161,123 @@
 // };
 
 // export default DefaultTemplate;
+// import React from "react";
+// import { motion } from "framer-motion";
+// import "./style.css"; // Keep your existing styles if any
+
+// const DefaultTemplate = ({
+//   name = "",
+//   title = "",
+//   github = "",
+//   projects = [],
+//   socials = [],
+//   contact = {},
+// }) => {
+//   return (
+
+    
+//     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans px-6 py-10">
+//       <motion.div
+//         initial={{ opacity: 0, scale: 0.95 }}
+//         animate={{ opacity: 1, scale: 1 }}
+//         transition={{ duration: 0.6 }}
+//         className="max-w-5xl mx-auto space-y-14"
+//       >
+//         {/* Header */}
+//         <motion.header
+//           initial={{ y: -30, opacity: 0 }}
+//           animate={{ y: 0, opacity: 1 }}
+//           transition={{ delay: 0.2 }}
+//           className="text-center"
+//         >
+//           <h1 className="text-4xl font-bold text-blue-600">{name}</h1>
+//           <p className="text-lg text-gray-600">{title}</p>
+//         </motion.header>
+
+//         {/* Projects */}
+//         <motion.section
+//           initial={{ x: -20, opacity: 0 }}
+//           animate={{ x: 0, opacity: 1 }}
+//           transition={{ delay: 0.3 }}
+//         >
+//           <h2 className="text-2xl font-semibold mb-4 text-blue-500">Projects</h2>
+//           <div className="grid gap-6 md:grid-cols-2">
+//             {projects.map((proj, i) => (
+//               <motion.div
+//                 key={i}
+//                 whileHover={{ scale: 1.02 }}
+//                 className="bg-white p-5 border border-gray-200 rounded shadow hover:shadow-blue-200 transition-shadow"
+//               >
+//                 <a
+//                   href={proj?.link}
+//                   target="_blank"
+//                   rel="noopener noreferrer"
+//                   className="text-xl font-semibold text-blue-600 hover:underline"
+//                 >
+//                   {proj?.name}
+//                 </a>
+//                 <p className="text-sm text-gray-700 mt-1">{proj?.description}</p>
+//               </motion.div>
+//             ))}
+//           </div>
+//         </motion.section>
+
+//         {/* Social Links */}
+//         <motion.section
+//           initial={{ x: 20, opacity: 0 }}
+//           animate={{ x: 0, opacity: 1 }}
+//           transition={{ delay: 0.4 }}
+//         >
+//           <h2 className="text-2xl font-semibold mb-4 text-blue-500">Socials</h2>
+//           <div className="flex flex-wrap gap-4">
+//             {socials.map((soc, i) => (
+//               <a
+//                 key={i}
+//                 href={soc?.link}
+//                 target="_blank"
+//                 rel="noopener noreferrer"
+//                 className="text-blue-600 hover:underline hover:text-blue-400 transition-colors"
+//               >
+//                 {soc?.platform}
+//               </a>
+//             ))}
+//           </div>
+//         </motion.section>
+
+//         {/* Contact */}
+//         <motion.footer
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 0.5 }}
+//           className="text-center text-gray-500 text-sm"
+//         >
+//           Contact: {contact?.email}
+//           Contact:{contact?.phone}
+//         </motion.footer>
+//       </motion.div>
+//     </div>
+    
+//   );
+// };
+
+// export default DefaultTemplate;
 import React from "react";
 import { motion } from "framer-motion";
-import "./style.css"; // Keep your existing styles if any
+import "./style.css"; // Keep your custom CSS if needed
 
 const DefaultTemplate = ({
-  name = "",
-  title = "",
-  github = "",
+  name = "Your Name",
+  title = "Developer",
+  github = "https://github.com",
   projects = [],
   socials = [],
   contact = {},
 }) => {
   return (
-
-    
     <div className="min-h-screen bg-gray-100 text-gray-900 font-sans px-6 py-10">
+      {/* ✅ TAILWIND CHECK — This box should be green if Tailwind is working */}
+      <div className="w-6 h-6 bg-green-500 rounded-full mb-2" title="Tailwind Test Box"></div>
+
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -201,25 +302,29 @@ const DefaultTemplate = ({
           transition={{ delay: 0.3 }}
         >
           <h2 className="text-2xl font-semibold mb-4 text-blue-500">Projects</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((proj, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.02 }}
-                className="bg-white p-5 border border-gray-200 rounded shadow hover:shadow-blue-200 transition-shadow"
-              >
-                <a
-                  href={proj?.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xl font-semibold text-blue-600 hover:underline"
+          {projects.length > 0 ? (
+            <div className="grid gap-6 md:grid-cols-2">
+              {projects.map((proj, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.02 }}
+                  className="bg-white p-5 border border-gray-200 rounded shadow hover:shadow-blue-200 transition-shadow"
                 >
-                  {proj?.name}
-                </a>
-                <p className="text-sm text-gray-700 mt-1">{proj?.description}</p>
-              </motion.div>
-            ))}
-          </div>
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xl font-semibold text-blue-600 hover:underline"
+                  >
+                    {proj.name}
+                  </a>
+                  <p className="text-sm text-gray-700 mt-1">{proj.description}</p>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-500">No projects added.</p>
+          )}
         </motion.section>
 
         {/* Social Links */}
@@ -230,17 +335,21 @@ const DefaultTemplate = ({
         >
           <h2 className="text-2xl font-semibold mb-4 text-blue-500">Socials</h2>
           <div className="flex flex-wrap gap-4">
-            {socials.map((soc, i) => (
-              <a
-                key={i}
-                href={soc?.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 hover:underline hover:text-blue-400 transition-colors"
-              >
-                {soc?.platform}
-              </a>
-            ))}
+            {socials.length > 0 ? (
+              socials.map((soc, i) => (
+                <a
+                  key={i}
+                  href={soc.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline hover:text-blue-400 transition-colors mr-4"
+                >
+                  {soc.platform.charAt(0).toUpperCase() + soc.platform.slice(1)}
+                </a>
+              ))
+            ) : (
+              <p className="text-gray-500">No social links added.</p>
+            )}
           </div>
         </motion.section>
 
@@ -251,11 +360,11 @@ const DefaultTemplate = ({
           transition={{ delay: 0.5 }}
           className="text-center text-gray-500 text-sm"
         >
-          Contact: {contact?.email}
+          Contact: {contact.email}
+          {contact.phone && <span> | 📞 {contact.phone}</span>}
         </motion.footer>
       </motion.div>
     </div>
-    
   );
 };
 

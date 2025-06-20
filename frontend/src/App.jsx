@@ -41,7 +41,7 @@ function App() {
     name: "",
     bio: "",
     githubUsername: "",
-    projectLinks: [""],
+   projectLinks: [{ link: "", description: "" }],
     socialLinks: {
       linkedin: "",
       twitter: "",
