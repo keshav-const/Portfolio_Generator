@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-     "build:css": "tailwindcss -i ./styles/tailwind.input.css -o ./styles/tailwind.output.css --minify"
+    "build:css": "tailwindcss -i ./styles/tailwind.input.css -o ./styles/tailwind.output.css --minify"
   },
   "presets": [
     "@babel/preset-react"
@@ -33,5 +33,8 @@
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.10",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.27.1"
   }
 }
